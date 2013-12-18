@@ -62,6 +62,7 @@ task :print do
   puts "\"#{highlight["highlight"]}\""
   puts
   puts " -- #{highlight["book"]}, #{highlight["howLongAgo"]}"
+  puts "    kindle://book?action=open&asin=#{highlight["asin"]}&location=#{highlight["startLocation"]}"
   puts
 end
 
@@ -77,7 +78,16 @@ task :email do
     html_part do
       content_type 'text/html; charset=UTF-8'
 
-      body "<p><i>#{highlight["highlight"]}</i><p><br><p>&mdash; #{highlight["book"]}, #{highlight["howLongAgo"]}</p>"
+      body <<-HTML
+        <p>
+          <i>&ldquo;#{highlight["highlight"]}&rdquo;</i>
+        </p>
+        <p>
+          &mdash; #{highlight["book"]}, 
+          #{highlight["howLongAgo"]}
+          (<a href="kindle://book?action=open&amp;asin=#{highlight['asin']}&amp;location=#{highlight['startLocation']}">loc</a>)
+        </p>
+      HTML
     end
   end
 
