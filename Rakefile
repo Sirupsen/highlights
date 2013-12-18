@@ -79,14 +79,16 @@ task :email do
       content_type 'text/html; charset=UTF-8'
 
       body <<-HTML
+        <html><body>
         <p>
           <i>&ldquo;#{highlight["highlight"]}&rdquo;</i>
         </p>
         <p>
           &mdash; #{highlight["book"]}, 
           #{highlight["howLongAgo"]}
-          (<a href="kindle://book?action=open&amp;asin=#{highlight['asin']}&amp;location=#{highlight['startLocation']}">loc</a>)
+          (<a href='kindle://book?action=open&amp;asin=#{highlight['asin']}&amp;location=#{highlight['startLocation']}'>loc</a>)
         </p>
+        </body></html>
       HTML
     end
   end
