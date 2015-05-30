@@ -45,6 +45,12 @@ class Kindle
     @highlights ||= JSON.load(open(@path))
   end
 
+  def books
+    Hash[highlights.group_by { |highlight|
+      highlight["book"]
+    }]
+  end
+
   def random_highlight
     highlights[rand(highlights.length)]
   end
@@ -64,6 +70,22 @@ task :print do
   puts " -- #{highlight["book"]}, #{highlight["howLongAgo"]}"
   puts "    kindle://book?action=open&asin=#{highlight["asin"]}&location=#{highlight["startLocation"]}"
   puts
+end
+
+# Output all highlights for a book passed as environment variable BOOK
+task :book do
+  raise ArgumentError, "Must pass BOOK env for book to match against e.g. `rake book BOOK=walrus`" unless ENV["BOOK"]
+
+  kindle = Kindle.new
+  titles = kindle.books.keys
+  title = titles.find { |book| book =~ /#{ENV["BOOK"]}/i }
+  raise "Unable to find book '#{ENV["BOOK"]}' among books:\n  * #{titles.join("\n  * ")}"
+
+  puts "# #{title}\n\n"
+
+  kindle.books[title].each do |highlight|
+    puts "#{highlight["highlight"]}\n\n"
+  end
 end
 
 # List all highlighted single words
