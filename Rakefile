@@ -66,6 +66,15 @@ task :print do
   puts
 end
 
+# List all highlighted single words
+task :words do
+  data = Kindle.new
+  puts data.highlights.reject { |highlight|
+    highlight["highlight"].include?(' ')
+  }.map { |highlight|
+    highlight["highlight"][/\w+/]
+  }
+end
 
 task :email do 
   data = Kindle.new
