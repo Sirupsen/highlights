@@ -52,7 +52,7 @@ class Kindle
   end
 
   def titles
-    books.keys
+    books.keys.sort
   end
 
   def random_highlight
