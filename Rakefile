@@ -46,9 +46,13 @@ class Kindle
   end
 
   def books
-    Hash[highlights.group_by { |highlight|
+    @books ||= Hash[highlights.group_by { |highlight|
       highlight["book"]
     }]
+  end
+
+  def titles
+    books.keys
   end
 
   def random_highlight
@@ -73,13 +77,12 @@ task :print do
 end
 
 # Output all highlights for a book passed as environment variable BOOK
-task :book do
+task :highlights do
   raise ArgumentError, "Must pass BOOK env for book to match against e.g. `rake book BOOK=walrus`" unless ENV["BOOK"]
 
   kindle = Kindle.new
-  titles = kindle.books.keys
-  title = titles.find { |book| book =~ /#{ENV["BOOK"]}/i }
-  raise "Unable to find book '#{ENV["BOOK"]}' among books:\n  * #{titles.join("\n  * ")}"
+  title = kindle.titles.find { |book| book =~ /#{ENV["BOOK"]}/i }
+  raise "Unable to find book '#{ENV["BOOK"]}' among books:\n  * #{titles.join("\n  * ")}" unless title
 
   puts "# #{title}\n\n"
 
