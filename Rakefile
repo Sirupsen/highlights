@@ -91,6 +91,11 @@ task :highlights do
   end
 end
 
+# Output title of all books
+task :books do
+  puts "  * #{Kindle.new.titles.join("\n  * ")}"
+end
+
 # List all highlighted single words
 task :words do
   data = Kindle.new
