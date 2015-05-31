@@ -16,9 +16,12 @@ set the following environment variables
 
 ## Commands
 
-* rake download - Will download all your kindle highlights
-* rake email - Will take a random highlight from your download and email it to someone (you)
-* rake print - Will take a random highlight and print it on the shell
+* `rake download` - Will download all your kindle highlights
+* `rake email` - Will take a random highlight from your download and email it to someone (you)
+* `rake print` - Will take a random highlight and print it on the shell
+* `rake books` - Will list all book titles
+* `rake highlights` BOOK=title - Will list all highlights for a book
+* `rake words` - Will list all single words highlighted in any book
 
 ## Best setup
 
